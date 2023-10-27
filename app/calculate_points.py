@@ -32,12 +32,12 @@ def calculate_points(receipt: Receipt):
             points += item_points
 
     # Rule: 6 points if the day in the purchase date is odd
-    purchase_date = datetime.strptime(receipt.purchaseDate, '%Y-%m-%d').day
+    purchase_date = receipt.purchaseDate.day
     if purchase_date % 2 == 1:
         points += 6
 
     # Rule: 10 points if the time of purchase is after 2:00pm and before 4:00pm
-    purchase_time = datetime.strptime(receipt.purchaseTime, '%H:%M').time()
+    purchase_time = receipt.purchaseTime
     after_2_pm = purchase_time >= datetime.strptime('14:00', '%H:%M').time()
     before_4_pm = purchase_time <= datetime.strptime('15:59', '%H:%M').time()
     if after_2_pm and before_4_pm:

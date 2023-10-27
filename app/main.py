@@ -5,6 +5,8 @@ from app.models import Receipt
 from fastapi import FastAPI
 
 import uuid
+import hashlib
+
 
 app = FastAPI()
 
@@ -18,9 +20,11 @@ def read_root():
 
 @app.post("/receipts/process")
 def process_receipt(receipt: Receipt):
-    receipt_id = str(uuid.uuid4())  # Generate unique id for receipt
-    receipts[receipt_id] = receipt  # Store receipt
-    return {"id": receipt_id}
+    # Hash the receipt content
+    receipt_hash = hashlib.md5(str(receipt).encode()).hexdigest()
+    if receipt_hash not in receipts:
+        receipts[receipt_hash] = receipt  # Store the receipt if it's new
+    return {"id": receipt_hash}
 
 
 @app.get("/receipts/{id}/points")
