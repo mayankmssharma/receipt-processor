@@ -10,11 +10,18 @@ app = FastAPI()
 
 receipts = {}  # To hold Receipt data. Key: receipt_id, Value: Receipt object
 
+
+@app.get("/")
+def read_root():
+    return {"message": "This is the receipt proessor application. You can try out the API at http://127.0.0.1:8000/docs. If it's not deployed locally, the url will change accordingly."}
+
+
 @app.post("/receipts/process")
 def process_receipt(receipt: Receipt):
     receipt_id = str(uuid.uuid4())  # Generate unique id for receipt
     receipts[receipt_id] = receipt  # Store receipt
     return {"id": receipt_id}
+
 
 @app.get("/receipts/{id}/points")
 def get_points(id: str):
