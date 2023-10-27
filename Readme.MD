@@ -83,3 +83,15 @@ Process a new receipt and return its unique ID.
 **Response:**
 
 Returns a JSON object containing the unique ID for the processed receipt.
+
+### GET `/receipts/{id}/points`
+
+Retrieve the calculated points for a given receipt ID.
+
+**Path Parameter**:
+
+id (string): The unique ID of the receipt
+
+**Response:**
+
+Returns a JSON object containing the points calculated from the receipt. If the receipt ID is not found, returns a 404 error with an appropriate message.
